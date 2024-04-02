@@ -1522,3 +1522,46 @@ function addUser(newUser) {
 [참고 자료](https://velog.io/@sxin2949/%EC%99%9C-useEffect%EC%97%90%EC%84%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%8C%A8%EC%B9%AD%EC%9D%84-%ED%95%98%EB%A9%B4-%EC%95%88%EB%90%A0%EA%B9%8C)
 
 </details>
+
+<details>
+  <summary>React 19</summary>
+
+- use
+  훅스의 룰의 영향을 받지 않으면서 프라미스와 컨텍스트를 넘길 수 있다.
+  넘기게 되면 프라미소가 해결될 떄까지 중단된다. 약간 api 콜을 위해 쓸 수 있거나 혹은 리액트 서버 액션의 역할을 대신할 수 있을 것 같다.
+  if와 같은 조건절이나 루프 안에서도 쓸 수 있으니깐 기억
+
+- Form Action
+  <form> 태그에 action을 넣을 수 있다.
+  React Server Action과는 다르다. 그냥 Ajax 폼 처리를 간소화시켜주는 역할을 한다.
+
+- useFormState
+  Form Action도 같이 연동해서 사용해야 함.
+  상위에 있는 <form>이 현재 제출 중인지 또는 성공적으로 제출되었는 지를 알려준다.
+
+  ```typescript
+  const { pending, data, method, action } = useFormStatus();
+  ```
+
+- useOptimisitic
+  `react-query`와 같이 낙관적 업데이트를 하게 도와줌.
+
+  ```typescript
+  import { useOptimistic } from "react";
+
+  function AppContainer() {
+    const [optimisticState, addOptimistic] = useOptimistic(
+      state,
+      // 업데이트 함수
+      (currentState, optimisticValue) => {
+        // 현재 상태에 낙관적인 값을 합치고 새로운 상태를 반환
+      }
+    );
+  }
+  ```
+
+- React Transition API (startTransition)
+  이전에 진행 중이던 애니메이션을 중단하고 바로 다음 애니메이션을 실행시킨다.
+  예를 들어, 탭 애니메이션의 경우 탭 1의 애니메이션이 진행 중일 때 유저가 탭 2 애니메이션을 호출하면 탭 1의 애니메이션을 바로 중단시키고 탭 2의 애니메이션을 실행시키는 것이다.
+
+</details>
