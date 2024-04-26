@@ -1373,3 +1373,35 @@ printHi(); // ReferenceError (함수 이름으로 함수를 호출할 수 없다
 1. Promise Capability 레코드 생성
    이는 프로미스를 "캡슐화"하고 프로미스를 이행(resolve)하거나 거부(reject)하기 위한 부가 기능을 더한다.
    이들은 최종적으로 프로미스의 [[PromiseState]]와 [[PromiseResult]]를 제어하고 비동기 작업을 시작하는 함수이다.
+
+# 기명 함수와 익명 함수
+
+기명 함수(named function)는 이름이 있는 함수라는 뜻이다.
+이 함수는 정의될 때 이름을 지정하며, 이 이름을 사용하여 함수에 접근하거나 호출할 수 있다.
+
+```typescript
+function add(x, y) {
+  // add 라는 이름의 기명 함수
+  return x + y;
+}
+
+console.log(add(2, 3)); // 결과: 5
+```
+
+### 함수 표현식
+
+함수 표현식은 기명 함수와 익명 함수 둘 다 가능하다.
+
+```typescript
+const multiply = function multiply(x, y) {
+  return x * y;
+};
+
+console.log(multiply(2, 3));
+
+const ayden = function () {
+  console.log("익명 함수 실행");
+};
+```
+
+### 참고로 함수표현식은 익명함수로 쓰든 기명함수로 쓰든 호이스팅이 되지 않는다는 사실은 변함이 없다.
