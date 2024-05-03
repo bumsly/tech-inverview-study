@@ -4,6 +4,59 @@ Attributes는 HTML 요소의 추가적인 정보를 전달하고 이름="값" �
 Property는 attribute에 대한 HTML DOM트리 안에서의 표현이다. 같은 예시에서 attribute는 값이 "myclass"이고 이름이 className인 property를 가진다.
 둘의 차이는 Attribute는 HTML 텍스트 문서에 있는 것이고, property는 HTML DOM 트리에 있는 것이다. attribute는 변하지 않고, property는 변할 수 있다. 가령 사용자가 체크박스를 체크하면 property의 값은 변하는 것이다. (DOM안에 존재하고 동적이기 때문에)
 
+- 핵심 차이점
+
+1. HTML 직렬화
+   속성은 HTML로 직렬화되지만 프로퍼티는 그렇지 않다.
+
+```typescript
+const div = document.createElement("div");
+
+div.setAttribute("foo", "bar");
+div.hello = "world";
+
+console.log(div.outerHTML); // '<div foo="bar"></div>'
+```
+
+따라서 브라우저 개발자 도구의 요소 패널에선 프로퍼티가 아닌 요소의 속성만 볼 수 있다.
+
+2. 값(value)의 타입
+   직렬화된 형식으로 작업하기 위해 속성 값은 항상 문자열이지만 프로퍼티는 모든 타입이 가능
+
+```typescript
+const div = document.createElement("div");
+const obj = { foo: "bar" };
+
+div.setAttribute("foo", obj);
+console.log(typeof div.getAttribute("foo")); // 'string'
+console.log(div.getAttribute("foo")); // '[object Object]'
+
+div.hello = obj;
+console.log(typeof div.hello); // 'object'
+console.log(div.hello); // { foo: 'bar' }
+```
+
+3. 대소문자 구분
+   속성의 이름은 대소문자를 구분하지 않지만 프로퍼티의 이름은 대소문자를 구분한다.
+
+```html
+<div id="test" HeLlO="world"></div>
+<script>
+  const div = document.querySelector("#test");
+
+  console.log(div.getAttributeNames()); // ['id', 'hello']
+
+  div.setAttribute("FOO", "bar");
+  console.log(div.getAttributeNames()); // ['id', 'hello', 'foo']
+
+  div.TeSt = "value";
+  console.log(div.TeSt); // 'value'
+  console.log(div.test); // undefined
+</script>
+```
+
+그러나 속성의 값은 대소문자를 구분한다.
+
 # withCredentials에 대해서 설명해주세요.
 
 <code>XMLHttpRequest</code>나 <code>Fetch API</code>를 사용하여 웹 페이지와 서버 간에 데이터를 주고받을 때 사용되는 옵션 중 하나입니다.
@@ -26,7 +79,7 @@ Property는 attribute에 대한 HTML DOM트리 안에서의 표현이다. 같은
 
 웹 프로토콜은 웹에서 쓰이는 통신규약입니다. 통신규약이라는 것은 쉽게 설명하면, 통신을 할때 내가 이렇게 할게 너는 이렇게 해줘라고 약속하는 것입니다.
 
-예시)  protocol://computer_name:port/document_name?parameters
+예시) protocol://computer_name:port/document_name?parameters
 
 - protocol : 문서에 접근하기 위해 사용하는 프로토콜 이름
 - computer_name : 문서가 있는 컴퓨터(서버)의 도메인 이름
@@ -42,6 +95,7 @@ Property는 attribute에 대한 HTML DOM트리 안에서의 표현이다. 같은
 따라서, 시맨틱 마크업이란 의미를 잘 전달하도록 문서를 작성하는 것.
 
 ### 예시
+
 - 헤더/푸터에 header와 footer 사용
 - 메인 컨텐츠에 main과 section 사용
 - 독립적인 컨텐츠에 article 사용
@@ -50,6 +104,7 @@ Property는 attribute에 대한 HTML DOM트리 안에서의 표현이다. 같은
 - 내비게이션에 nav 사용
 
 ### 특징
+
 - 검색엔진이 시맨틱 태그를 중요한 키워드로 간주하기 때문에 검색엔진 최적화(SEO)에 유리하다.
 - 웹 접근성 측면에서, 시각장애가 있는 사용자로 하여금 그 의미를 훨씬 잘 파악할 수 있다.
 - 단순한 div, span으로 둘러싸인 요소들보다 코드를 볼 때 가독성이 좋다.
@@ -57,6 +112,7 @@ Property는 attribute에 대한 HTML DOM트리 안에서의 표현이다. 같은
 # HTML 렌더링 도중 JavaScript가 실행되면 렌더링이 멈추는 이유가 뭔가요?
 
 렌더링 엔진은 HTML 한 줄 씩 순차적으로 파싱하며 DOM을 생성해 나가다가 <script> 태그를 만나면 파싱을 중지한다. JS 코드를 파싱하기 위해 JS 엔진에 제어권을 넘기게 되는데, 파싱이 끝나면 다시 렌더링 엔진에 제어권을 넘겨 중단된 부분부터 HTML 파싱을 재개하며 DOM 트리를 생성한다.
+
 - 이러한 원리 때문에 스크립트 소스는 body 태그 끝에 두는 것을 권장한다. ⇒ 스크립트 먼저 파싱 되면 레이아웃이 제대로 구성되지 않은 상태로 뷰를 제공할 수 있기 때문에 UX를 떨어지는 결과를 초래한다.
 - 자바스크립트 파싱과 실행은 브라우저 엔진이 아닌 자바스크립트 엔진에서 처리한다.
 
@@ -73,13 +129,15 @@ ARIA는 HTML을 보충해, 일반적으로 보조 기술이 알 수 없는 상�
 참고로 Aria로 제공되는 많은 기능들이 HTML에서 태그로 이미 제공되므로 웬만한 상황에서는 태그를 활용하는 것이 좋다.
 
 ex)
+
 ```html
 <div
   id="percent-loaded"
   role="progressbar"
   aria-valuenow="75"
   aria-valuemin="0"
-  aria-valuemax="100"></div>
+  aria-valuemax="100"
+></div>
 ```
 
 <details>
@@ -166,7 +224,7 @@ true는 현재 버튼이 눌림상태라는 것을 전달한다.
 
 ## async 속성을 쓰면
 
-브라우저는 문서를 파싱하는 동안 해당 스크립트를 만나면 문서 파싱과 함께 스크립트를 다운 받고 스크립트 다운이 완료되면 즉시 스크립트를 실행하게 된다. 
+브라우저는 문서를 파싱하는 동안 해당 스크립트를 만나면 문서 파싱과 함께 스크립트를 다운 받고 스크립트 다운이 완료되면 즉시 스크립트를 실행하게 된다.
 
 ## defer 속성을 쓰면
 
