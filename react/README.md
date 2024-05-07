@@ -1572,3 +1572,19 @@ function addUser(newUser) {
   예를 들어, 탭 애니메이션의 경우 탭 1의 애니메이션이 진행 중일 때 유저가 탭 2 애니메이션을 호출하면 탭 1의 애니메이션을 바로 중단시키고 탭 2의 애니메이션을 실행시키는 것이다.
 
 </details>
+
+<details>
+  <summary>React v19 마이그레이션</summary>
+
+- 함수형 컴포넌트에서 propTypes및 defaultProps의 삭제
+- 클래스 컴포넌트에서 contextTypes 및 getChildContext의 삭제
+- string refs 삭제
+- Module pattern factories 삭제
+- React.createFactory 삭제
+- ReactDOM.render와 ReactDOM.hydrate의 삭제
+- ReactDOM.findDOMNode 삭제
+- React Strict의 변경
+- UMD build 삭제
+- ref의 암시적 반환 사용 중지
+
+</details>
