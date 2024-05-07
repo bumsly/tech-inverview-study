@@ -15,6 +15,8 @@
     <td><a href='#javascript'>📦 JAVASCRIPT</a></td>
     <td><a href='#web'>🏠 WEB</a></td>
     <td><a href='#cs'>💻 CS</a></td>
+    <td><a href='#react'>🔥 react</a></td>
+    <td><a href='#react2'>🔥 react2</a></td>
   </tr>
 </table>
 
@@ -270,3 +272,6 @@
 ---
 
 - 24년 4월 25일 (o) - 다시 시작
+- 24년 4월 26일 (o)
+- 24년 5월 3일 (o)
+- 24년 5월 7일 (o)
